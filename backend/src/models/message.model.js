@@ -6,23 +6,20 @@ const messageSchema = new mongoose.Schema({
         ref: "User",
         required: true,
     },
-    senderId: {
+    receiverId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
         required: true,
     } ,
-    chat: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Chat",
+    text: {
+        type: String,
+        required: true,
     },
-    createdAt: {
-        type: Date,
-        default: Date.now,
+    image: {
+        type: String,
     },
 },
-    {
-        timestamps: true,
-    }
+    {  timestamps: true,  }
 );
 
 const Message = mongoose.model("Message", messageSchema);
