@@ -1,4 +1,5 @@
 import React from 'react'
+import { useEffect } from 'react'
 import { Routes,Route } from 'react-router-dom'
 import Navbar from './components/Navbar.jsx'
 import HomePage from './pages/Homepage.jsx'
@@ -6,8 +7,15 @@ import SignUpPage from './pages/SignupPage.jsx'
 import LoginPage from './pages/LoginPage.jsx'
 import SettingsPage from './pages/SettingsPage.jsx'
 import ProfiePage from './pages/ProfilePage.jsx'
+import { useAuthStore } from './store/useAuthStore.js'
 const App = () => {
-  return (<>
+  const {authUser,checkAuth}=useAuthStore()
+ useEffect(() => {
+  checkAuth(); 
+ },[checkAuth]);
+
+ console.log({authUser});
+  return (
   <div >
     <Navbar/>
     <Routes>
@@ -18,7 +26,7 @@ const App = () => {
 <Route path='/profile' element={<ProfiePage />}/>
     </Routes>
   </div>
-</>
+
   )
 }
 
