@@ -1,8 +1,0 @@
-MONGODB_URI=mongodb+srv://arambhsuyal:Bcgsjg3by1sP7A6T@cluster0.sfrx92t.mongodb.net/YapYap?retryWrites=true&w=majority&appName=Cluster0
-PORT=5001
-JWT_SECRET=mysecretkey
-NODE_ENV=dev
-
-CLOUDINARY_CLOUD_NAME=dgvvco0kl
-CLOUDINARY_API_KEY=188879379189711
-CLOUDINARY_API_SECRET=WtQpS8UTJscQ9E63JIbbnGxuDqI
