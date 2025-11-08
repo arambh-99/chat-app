@@ -1,20 +1,23 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useAuthStore } from "../store/useAuthStore";
 import { Eye, EyeOff, Loader2, Lock, Mail, MessageSquare, User } from "lucide-react";
 import { Link } from "react-router-dom";
 
 import AuthImagePattern from "../components/AuthImagePattern";
-import { toast } from "react-hot-toast";
-const SignupPage = () => {
+import toast from "react-hot-toast";
+
+const SignUpPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
-    password: ""
+    password: "",
   });
 
+  const { signup, isSigningUp } = useAuthStore();
+
   const validateForm = () => {
-       if (!formData.fullName.trim()) return toast.error("Full name is required");
+    if (!formData.fullName.trim()) return toast.error("Full name is required");
     if (!formData.email.trim()) return toast.error("Email is required");
     if (!/\S+@\S+\.\S+/.test(formData.email)) return toast.error("Invalid email format");
     if (!formData.password) return toast.error("Password is required");
@@ -22,52 +25,46 @@ const SignupPage = () => {
 
     return true;
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    // call signup(formData) if needed
-    const success = validateForm();
-    if(success===true) signup(formData);
-  };
 
-  const { signup, isSigningUp } = useAuthStore();
+    const success = validateForm();
+
+    if (success === true) signup(formData);
+  };
 
   return (
     <div className="min-h-screen grid lg:grid-cols-2">
-      {/* leftside */}
+      {/* left side */}
       <div className="flex flex-col justify-center items-center p-6 sm:p-12">
         <div className="w-full max-w-md space-y-8">
           {/* LOGO */}
           <div className="text-center mb-8">
             <div className="flex flex-col items-center gap-2 group">
               <div
-                className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center
-                group-hover:bg-primary/20 transition-colors"
+                className="size-12 rounded-xl bg-primary/10 flex items-center justify-center 
+              group-hover:bg-primary/20 transition-colors"
               >
-                              <MessageSquare className="size-6 text-primary" />
-
+                <MessageSquare className="size-6 text-primary" />
               </div>
               <h1 className="text-2xl font-bold mt-2">Create Account</h1>
               <p className="text-base-content/60">Get started with your free account</p>
             </div>
           </div>
 
-          {/* FORM */}
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Full Name */}
             <div className="form-control">
               <label className="label">
                 <span className="label-text font-medium">Full Name</span>
               </label>
-
-              <div className="relative"> {/* ensure relative so absolute positions work */}
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none z-20">
-                  {/* explicit size/color/stroke so it is always visible */}
-                  <User size={18} color="#9CA3AF" strokeWidth={1.6} />
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none z-10">
+                  <User className="size-5 text-gray-400/40" />
                 </div>
-
                 <input
                   type="text"
-                  className="input input-bordered border border-gray-800 w-full pl-10" 
+                  className={`input input-bordered w-full pl-10`}
                   placeholder="John Doe"
                   value={formData.fullName}
                   onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
@@ -75,20 +72,17 @@ const SignupPage = () => {
               </div>
             </div>
 
-            {/* Email */}
             <div className="form-control">
               <label className="label">
                 <span className="label-text font-medium">Email</span>
               </label>
-
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none z-20">
-                  <Mail size={18} color="#9CA3AF" strokeWidth={1.6} />
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none z-10">
+                  <Mail className="size-5 text-gray-400/40" />
                 </div>
-
                 <input
                   type="email"
-                  className="input input-bordered border border-gray-800 w-full pl-10"
+                  className={`input input-bordered w-full pl-10`}
                   placeholder="you@example.com"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -96,35 +90,30 @@ const SignupPage = () => {
               </div>
             </div>
 
-            {/* Password */}
             <div className="form-control">
               <label className="label">
                 <span className="label-text font-medium">Password</span>
               </label>
-
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none z-20">
-                  <Lock size={18} color="#9CA3AF" strokeWidth={1.6} />
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none z-10">
+                  <Lock className="size-5 text-gray-400/40" />
                 </div>
-
                 <input
                   type={showPassword ? "text" : "password"}
-                  className="input input-bordered border border-gray-800  w-full pl-10 pr-12"
+                  className={`input input-bordered w-full pl-10`}
                   placeholder="••••••••"
                   value={formData.password}
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                 />
-
                 <button
                   type="button"
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center z-30"
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center z-10"
                   onClick={() => setShowPassword(!showPassword)}
-                  aria-label={showPassword ? "Hide password" : "Show password"}
                 >
                   {showPassword ? (
-                    <EyeOff size={18} color="#94a3b8" strokeWidth={1.6} />
+                    <EyeOff className="size-5 text-gray-400/40" />
                   ) : (
-                    <Eye size={18} color="#94a3b8" strokeWidth={1.6} />
+                    <Eye className="size-5 text-gray-400/40" />
                   )}
                 </button>
               </div>
@@ -133,7 +122,7 @@ const SignupPage = () => {
             <button type="submit" className="btn btn-primary w-full" disabled={isSigningUp}>
               {isSigningUp ? (
                 <>
-                  <Loader2 className="w-5 h-5 animate-spin inline-block mr-2" />
+                  <Loader2 className="size-5 animate-spin" />
                   Loading...
                 </>
               ) : (
@@ -150,18 +139,16 @@ const SignupPage = () => {
               </Link>
             </p>
           </div>
-
         </div>
       </div>
-{/* Right side */}
 
-<AuthImagePattern
-title="Join our community"
-subtitle="Create an account and start chatting with your friends"
-/>
+      {/* right side */}
 
+      <AuthImagePattern
+        title="Join our community"
+        subtitle="Connect with friends, share moments, and stay in touch with your loved ones."
+      />
     </div>
   );
 };
-
-export default SignupPage;
+export default SignUpPage;
