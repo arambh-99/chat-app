@@ -13,7 +13,9 @@ const [selectedImg,setSelectedImg]=useState(null)
 
     reader.onload = async () => {
       const base64Image = reader.result;
+      //console.log("image url",base64Image);
       setSelectedImg(base64Image)
+      //console.log("selected image",selectedImg)
       await updateProfile({profilePic:base64Image})
     }
 
